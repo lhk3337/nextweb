@@ -1,17 +1,20 @@
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+.nav_container {
   padding: 1rem 10%;
   height: 5rem;
   background-color: #202020;
 }
 
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .logo {
   font-size: 1.5rem;
   color: white;
-  font-family: 'Fira', sans-serif;
+  font-family: "Fira", sans-serif;
   height: 100%;
   display: flex;
   justify-content: center;
