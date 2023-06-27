@@ -1,4 +1,6 @@
-const DUMMY_EVENTS = [
+import { ItemType } from "../types/types";
+
+const DUMMY_EVENTS: ItemType[] = [
   {
     id: "e1",
     title: "Programming for everyone",
@@ -31,18 +33,39 @@ const DUMMY_EVENTS = [
   },
 ];
 
+export const DUMMY_MONTH = {
+  year: [2021, 2022],
+  month: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
+};
+
 // isFeatured true인 요소 가져오기
-function getFeaturedEvents() {
+export function getFeaturedEvents() {
   return DUMMY_EVENTS.filter((event) => event.isFeatured);
 }
 
 // 모든 요소 가져오기
-function getAllEvents() {
+export function getAllEvents() {
   return DUMMY_EVENTS;
 }
 
+interface filteredEventsTyle {
+  [key: string]: number;
+}
 //날짜가 같은 날인 요소 가져오기
-function getFilteredEvents(dateFilter) {
+export function getFilteredEvents(dateFilter: filteredEventsTyle) {
   const { year, month } = dateFilter;
 
   let filteredEvents = DUMMY_EVENTS.filter((event) => {
@@ -54,6 +77,6 @@ function getFilteredEvents(dateFilter) {
 }
 
 // id가 같은 요소 가져오기
-function getEventById(id) {
+export function getEventById(id: string) {
   return DUMMY_EVENTS.find((event) => event.id === id);
 }
