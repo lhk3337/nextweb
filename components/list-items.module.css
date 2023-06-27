@@ -1,0 +1,10 @@
+.main_container {
+  max-width: 40rem;
+  margin: 5rem auto;
+}
+
+.lists {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
