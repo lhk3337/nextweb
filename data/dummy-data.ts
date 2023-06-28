@@ -62,7 +62,7 @@ export function getAllEvents() {
 }
 
 interface filteredEventsTyle {
-  [key: string]: number;
+  [key: string]: string;
 }
 //날짜가 같은 날인 요소 가져오기
 export function getFilteredEvents(dateFilter: filteredEventsTyle) {
@@ -70,7 +70,7 @@ export function getFilteredEvents(dateFilter: filteredEventsTyle) {
 
   let filteredEvents = DUMMY_EVENTS.filter((event) => {
     const eventDate = new Date(event.date);
-    return eventDate.getFullYear() === year && eventDate.getMonth() === month - 1;
+    return eventDate.getFullYear() === parseInt(year) && eventDate.getMonth() === parseInt(month) - 1;
   });
 
   return filteredEvents;
