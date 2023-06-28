@@ -1,9 +1,40 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { getFilteredEvents } from "../../data/dummy-data";
+import Itemlist from "../../components/list-items";
+import ErrorAlert from "../../components/error-alert/error-alert";
+import ResultsTitle from "../../components/results-title/results-title";
+import Button from "../../components/button";
+
 const FilterEvent = () => {
   const router = useRouter();
+  const [year, month] = (router.query.slug as string[]) || [];
 
-  return <div>{router.query.slug}</div>;
+  const filteredItems = getFilteredEvents({ year, month });
+
+  if (!year && !month) {
+    return <h1>Loading</h1>;
+  }
+
+  if (!filteredItems || filteredItems.length === 0) {
+    return (
+      <>
+        <ErrorAlert>
+          <p>No events found for the chosen filter!</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
+        </div>
+      </>
+    );
+  }
+  const date = new Date(+year, +month - 1);
+  return (
+    <>
+      <ResultsTitle date={date} />
+      <Itemlist items={filteredItems} />
+    </>
+  );
 };
 
 export default FilterEvent;
