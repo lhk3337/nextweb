@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./list-items.module.css";
-import { ItemType } from "../types/types";
+import { ItemType } from "../../types/types";
 import Item from "./item";
 interface Props {
   items: ItemType[];

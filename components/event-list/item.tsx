@@ -1,11 +1,11 @@
 import React from "react";
-import { ItemType } from "../types/types";
+import { ItemType } from "../../types/types";
 import classes from "./item.module.css";
 import Image from "next/image";
-import Button from "./button";
-import ArrowRightIcon from "../components/icons/arrow-right-icon";
-import DateIcon from "./icons/date-icon";
-import AddressIcon from "./icons/address-icon";
+import Button from "../element/button";
+import ArrowRightIcon from "../icons/arrow-right-icon";
+import DateIcon from "../icons/date-icon";
+import AddressIcon from "../icons/address-icon";
 
 const Item = ({ title, location, date, image, id }: ItemType) => {
   const fetchedDate = new Date(date).toLocaleDateString("en-US", { month: "long", year: "numeric", day: "numeric" });

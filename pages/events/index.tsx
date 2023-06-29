@@ -1,7 +1,7 @@
 import React from "react";
-import Itemlist from "../../components/list-items";
+import Itemlist from "../../components/event-list/list-items";
 import { getAllEvents } from "../../data/dummy-data";
-import SearchItem from "../../components/search-item";
+import SearchItem from "../../components/event-list/search-item";
 
 const Events = () => {
   const allItem = getAllEvents();
