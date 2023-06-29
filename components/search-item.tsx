@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DUMMY_MONTH } from "../data/dummy-data";
 import { useRouter } from "next/router";
+import classes from "./search-item.module.css";
 const SearchItem = () => {
   const { year, month } = DUMMY_MONTH;
   const router = useRouter();
@@ -17,23 +18,29 @@ const SearchItem = () => {
     router.push(`/events/${selectedYear}/${selectedMonth}`);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="year">Year</label>
-      <select name="" id="year" onChange={handleChange(setSelectedYear)}>
-        {year.map((value, index) => (
-          <option value={value} key={index}>
-            {value}
-          </option>
-        ))}
-      </select>
-      <label htmlFor="month">Month</label>
-      <select name="" id="month" onChange={handleChange(setSelectedMonth)}>
-        {month.map((value, index) => (
-          <option value={index + 1} key={index}>
-            {value}
-          </option>
-        ))}
-      </select>
+    <form onSubmit={handleSubmit} className={classes.form}>
+      <div className={classes.controls}>
+        <div className={classes.control}>
+          <label htmlFor="year">Year</label>
+          <select name="" id="year" onChange={handleChange(setSelectedYear)}>
+            {year.map((value, index) => (
+              <option value={value} key={index}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={classes.control}>
+          <label htmlFor="month">Month</label>
+          <select name="" id="month" onChange={handleChange(setSelectedMonth)}>
+            {month.map((value, index) => (
+              <option value={index + 1} key={index}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
       <button type="submit">Find Events</button>
     </form>
   );
