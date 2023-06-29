@@ -12,9 +12,7 @@ const FilterEvent = () => {
 
   const filteredItems = getFilteredEvents({ year, month });
 
-  if (!year && !month) {
-    return <h1>Loading</h1>;
-  }
+  if (!year && !month) return;
 
   if (!filteredItems || filteredItems.length === 0) {
     return (

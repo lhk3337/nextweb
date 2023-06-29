@@ -22,7 +22,7 @@
   border: 5px solid white;
 }
 
-.image img {
+.image .thumbnail {
   width: 10rem;
   height: 10rem;
   object-fit: cover;
@@ -55,7 +55,7 @@
     height: 20rem;
   }
 
-  .image img {
+  .image .thumbnail {
     width: 20rem;
     height: 20rem;
   }
