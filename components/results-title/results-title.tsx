@@ -1,7 +1,10 @@
-import Button from "../../components/button";
+import Button from "components/element/button";
 import classes from "./results-title.module.css";
 
-function ResultsTitle({ date }) {
+interface Props {
+  date: Date;
+}
+function ResultsTitle({ date }: Props) {
   const humanReadableDate = new Date(date).toLocaleDateString("en-US", {
     month: "long",
     year: "numeric",
