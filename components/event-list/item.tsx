@@ -2,7 +2,8 @@ import React from "react";
 import { ItemType } from "../../types/types";
 import classes from "./item.module.css";
 import Image from "next/image";
-import Button from "../element/button";
+import Button from "components/element/button";
+
 import ArrowRightIcon from "../icons/arrow-right-icon";
 import DateIcon from "../icons/date-icon";
 import AddressIcon from "../icons/address-icon";

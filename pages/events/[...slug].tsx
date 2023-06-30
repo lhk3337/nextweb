@@ -1,10 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { getFilteredEvents } from "../../data/dummy-data";
-import Itemlist from "../../components/event-list/list-items";
-import ErrorAlert from "../../components/error-alert/error-alert";
-import ResultsTitle from "../../components/results-title/results-title";
-import Button from "../../components/element/button";
+import Itemlist from "components/event-list/list-items";
+import ErrorAlert from "components/error-alert/error-alert";
+import ResultsTitle from "components/results-title/results-title";
+import Button from "components/element/button";
 
 const FilterEvent = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const FilterEvent = () => {
       </>
     );
   }
-  const date = new Date(+year, +month - 1);
+  const date: Date = new Date(+year, +month - 1);
   return (
     <>
       <ResultsTitle date={date} />

@@ -3,7 +3,7 @@ import DateIcon from "../icons/date-icon";
 import LogisticsItem from "./logistics-item";
 import classes from "./event-logistics.module.css";
 import Image from "next/image";
-import { ItemType } from "../../types/types";
+import { ItemType } from "types/types";
 
 function EventLogistics({ title, location, date, image, id }: ItemType) {
   const fetchedDate = new Date(date).toLocaleDateString("en-US", { month: "long", year: "numeric", day: "numeric" });

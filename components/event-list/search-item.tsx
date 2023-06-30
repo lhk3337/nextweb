@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DUMMY_MONTH } from "../../data/dummy-data";
+import { DUMMY_MONTH } from "data/dummy-data";
 import { useRouter } from "next/router";
 import classes from "./search-item.module.css";
 const SearchItem = () => {

@@ -1,4 +1,4 @@
-import { ItemType } from "../../types/types";
+import { ItemType } from "types/types";
 import classes from "./event-summary.module.css";
 
 function EventSummary({ title }: ItemType) {
