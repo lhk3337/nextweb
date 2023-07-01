@@ -1,16 +1,15 @@
 import React from "react";
-import { useRouter } from "next/router";
-import { getEventById } from "data/dummy-data";
 import { ItemType } from "types/types";
 
 import EventSummary from "components/event-detail/event-summary";
 import EventContent from "components/event-detail/event-content";
 import EventLogistics from "components/event-detail/event-logistics";
-
-const EventDetail = () => {
-  const router = useRouter();
-  const id = router.query.id as string;
-  const events = getEventById(id) as ItemType;
+import { getAllEvents, getEventById } from "libs/api-util";
+import { GetStaticPropsContext } from "next";
+interface Props {
+  events: ItemType;
+}
+const EventDetail = ({ events }: Props) => {
   if (!events) return;
 
   return (
@@ -25,3 +24,18 @@ const EventDetail = () => {
 };
 
 export default EventDetail;
+
+export async function getStaticPaths() {
+  const res = await getAllEvents();
+  const paths = res.map((event: ItemType) => ({ params: { id: event.id } }));
+  return {
+    paths,
+    fallback: "blocking",
+  };
+}
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const id = context.params?.id as string;
+  const response = await getEventById(id);
+  return { props: { events: response } };
+};

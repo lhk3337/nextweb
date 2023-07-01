@@ -1,11 +1,14 @@
 import React from "react";
 import Itemlist from "components/event-list/list-items";
-import { getAllEvents } from "data/dummy-data";
 import SearchItem from "components/event-list/search-item";
+import { ItemType } from "types/types";
+import { getAllEvents } from "libs/api-util";
 
-const Events = () => {
-  const allItem = getAllEvents();
+interface Props {
+  allItem: ItemType[];
+}
 
+const Events = ({ allItem }: Props) => {
   return (
     <>
       <SearchItem />
@@ -15,3 +18,13 @@ const Events = () => {
 };
 
 export default Events;
+
+export const getStaticProps = async () => {
+  const response = await getAllEvents();
+  return {
+    props: {
+      allItem: response,
+    },
+    revalidate: 60,
+  };
+};
