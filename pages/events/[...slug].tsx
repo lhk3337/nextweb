@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getFilteredEvents } from "../../data/dummy-data";
+
 import Itemlist from "components/event-list/list-items";
 import ErrorAlert from "components/error-alert/error-alert";
 import ResultsTitle from "components/results-title/results-title";
 import Button from "components/element/button";
+import { GetServerSidePropsContext } from "next";
+import { getFilteredEvents } from "libs/api-util";
 
-const FilterEvent = () => {
+interface Props {
+  slug: string[];
+}
+
+const FilterEvent = ({ slug }: Props) => {
   const router = useRouter();
-  const [year, month] = (router.query.slug as string[]) || [];
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [year, month] = slug;
 
-  const filteredItems = getFilteredEvents({ year, month });
+  useEffect(() => {
+    const fetchDate = async () => {
+      const getfilteredItems = await getFilteredEvents({ year, month });
+      setFilteredItems(getfilteredItems);
+    };
+    fetchDate();
+  }, [year, month]);
 
   if (!year && !month) return;
 
@@ -27,6 +40,7 @@ const FilterEvent = () => {
     );
   }
   const date: Date = new Date(+year, +month - 1);
+
   return (
     <>
       <ResultsTitle date={date} />
@@ -36,3 +50,8 @@ const FilterEvent = () => {
 };
 
 export default FilterEvent;
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const slug = context.params?.slug;
+  return { props: { slug } };
+};
