@@ -19,6 +19,7 @@
       "components/*": ["components/*"],
       "pages/*": ["pages/*"],
       "data/*": ["data/*"],
+      "libs/*": ["libs/*"],
       "type/*": ["type/*"]
     },
     "typeRoots": ["./@types", "./node_modules/@types"]
