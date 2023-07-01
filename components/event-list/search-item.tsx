@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { DUMMY_MONTH } from "data/dummy-data";
+import { YEAR_MONTH } from "libs/date";
 import { useRouter } from "next/router";
 import classes from "./search-item.module.css";
 const SearchItem = () => {
-  const { year, month } = DUMMY_MONTH;
+  const { year, month } = YEAR_MONTH;
   const router = useRouter();
   const [selectedYear, setSelectedYear] = useState("2021");
   const [selectedMonth, setSelectedMonth] = useState("1");
