@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next";
+import useSwr from "swr";
 
 import Itemlist from "components/event-list/list-items";
 import ErrorAlert from "components/error-alert/error-alert";
 import ResultsTitle from "components/results-title/results-title";
 import Button from "components/element/button";
-import { GetServerSidePropsContext } from "next";
 import { getFilteredEvents } from "libs/api-util";
 import { ItemType } from "types/types";
+import { useEffect, useState } from "react";
 
 interface Props {
   getfilteredItems: ItemType[];
@@ -16,12 +18,27 @@ interface Props {
   };
 }
 
-const FilterEvent = ({ getfilteredItems, filterDate }: Props) => {
+const FilterEvent = () => {
+  const [filteredItems, setFilteredItems] = useState([]);
   const router = useRouter();
 
-  const { year, month } = filterDate;
-  if (!year && !month) return;
-  if (!getfilteredItems || getfilteredItems.length === 0) {
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+  const { data, isLoading } = useSwr("https://nextjs-practice-604ad-default-rtdb.firebaseio.com/events.json", fetcher);
+
+  const [year, month] = (router.query.slug as string[]) || [];
+
+  useEffect(() => {
+    if (!data) return;
+    setFilteredItems(data);
+  }, [data]);
+
+  const filteredEvents = filteredItems.filter((event: ItemType) => {
+    const eventDate = new Date(event.date);
+    return eventDate.getFullYear() === parseInt(year) && eventDate.getMonth() === parseInt(month) - 1;
+  });
+
+  if (isLoading) return;
+  if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
         <ErrorAlert>
@@ -38,17 +55,17 @@ const FilterEvent = ({ getfilteredItems, filterDate }: Props) => {
   return (
     <>
       <ResultsTitle date={date} />
-      <Itemlist items={getfilteredItems} />
+      <Itemlist items={filteredEvents} />
     </>
   );
 };
 
 export default FilterEvent;
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const { params } = context;
-  const slug = params?.slug;
-  const [year, month] = slug as string[];
-  const getfilteredItems = await getFilteredEvents({ year, month });
-  return { props: { getfilteredItems, filterDate: { year, month } } };
-};
+// export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+//   const { params } = context;
+//   const slug = params?.slug;
+//   const [year, month] = slug as string[];
+//   const getfilteredItems = await getFilteredEvents({ year, month });
+//   return { props: { getfilteredItems, filterDate: { year, month } } };
+// };
