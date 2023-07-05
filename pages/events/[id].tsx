@@ -6,6 +6,7 @@ import EventContent from "components/event-detail/event-content";
 import EventLogistics from "components/event-detail/event-logistics";
 import { getAllEvents, getEventById } from "libs/api-util";
 import { GetStaticPropsContext } from "next";
+import Comments from "components/input/comments";
 interface Props {
   events: ItemType;
 }
@@ -19,6 +20,9 @@ const EventDetail = ({ events }: Props) => {
       <EventContent>
         <p>{events.description}</p>
       </EventContent>
+      <div>
+        <Comments eventId={events.id} />
+      </div>
     </div>
   );
 };

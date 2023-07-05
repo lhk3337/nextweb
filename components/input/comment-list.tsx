@@ -1,20 +1,19 @@
 import classes from "./comment-list.module.css";
-
-function CommentList() {
+import { CommentData } from "types/types";
+interface Props {
+  addComments: CommentData[];
+}
+function CommentList({ addComments }: Props) {
   return (
     <ul className={classes.comments}>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      {addComments?.map((comment: CommentData) => (
+        <li key={comment.id}>
+          <p>{comment.text}</p>
+          <div>
+            By <address>{comment.name}</address>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }
