@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-function handler(req: NextApiRequest, res: NextApiResponse) {
+import { MongoClient } from "mongodb";
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const userEmail = req.body.email;
     if (!userEmail || !userEmail.includes("@")) {
@@ -7,7 +8,13 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
 
-    console.log(userEmail);
+    const client = await MongoClient.connect(
+      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.cjv5svh.mongodb.net/?retryWrites=true&w=majority`
+    );
+
+    const db = client.db();
+    await db.collection("emails").insertOne({ email: userEmail });
+    client.close();
     res.status(201).json({ message: "Sign up!" });
   }
 }
