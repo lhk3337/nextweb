@@ -7,3 +7,10 @@ export interface ItemType {
   image: string;
   isFeatured: boolean;
 }
+
+export interface CommentData {
+  id?: string;
+  email: string;
+  name: string;
+  text: string;
+}
