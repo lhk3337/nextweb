@@ -1,7 +1,7 @@
 import { getFeaturedEvents } from "libs/api-util";
 import Itemlist from "components/event-list/list-items";
 import { ItemType } from "types/types";
-import Input from "components/input";
+import NewsletterRegistration from "components/input/newsletter-registration";
 
 interface Props {
   featuredData: ItemType[];
@@ -10,7 +10,7 @@ interface Props {
 export default function Home({ featuredData }: Props) {
   return (
     <>
-      <Input />
+      <NewsletterRegistration />
       <Itemlist items={featuredData} />
     </>
   );
