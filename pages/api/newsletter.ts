@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient } from "mongodb";
+
+import { connectToDatabase } from "libs/mongodb";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const userEmail = req.body.email;
@@ -8,11 +9,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
 
-    const client = await MongoClient.connect(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.cjv5svh.mongodb.net/?retryWrites=true&w=majority`
-    );
-
-    const db = client.db();
+    const db = (await connectToDatabase()).db();
     const emailCollection = db.collection("emails");
     const isEmail = await emailCollection.findOne({ email: userEmail });
 
@@ -20,7 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(422).json({ message: "Email address already exists." });
     } else {
       await emailCollection.insertOne({ email: userEmail });
-      client.close();
+      (await connectToDatabase()).close();
       res.status(201).json({ message: "Sign up!" });
     }
   }
