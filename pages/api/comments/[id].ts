@@ -1,5 +1,6 @@
+import { connectToDatabase } from "libs/mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
-function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = req.query.id;
 
   if (req.method === "POST") {
@@ -10,19 +11,20 @@ function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
     const newComment = {
-      id: new Date().toISOString(),
+      id,
       email,
       name,
       text,
     };
+    const db = (await connectToDatabase()).db();
+    await db.collection("comments").insertOne(newComment);
+
     res.status(201).json({ message: "Added comments!", newComment });
   }
   if (req.method === "GET") {
-    const dummyData = [
-      { id: "c1", name: "max", text: "first comment" },
-      { id: "c2", name: "aaa", text: "second comment" },
-    ];
-    res.status(200).json({ comments: dummyData });
+    const db = (await connectToDatabase()).db();
+    const result = await db.collection("comments").find({ id: id }).sort({ _id: -1 }).toArray();
+    res.status(200).json({ comments: result });
   }
 }
 

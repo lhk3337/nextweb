@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface ItemType {
   id: string;
   title: string;
@@ -9,7 +11,8 @@ export interface ItemType {
 }
 
 export interface CommentData {
-  id?: string;
+  _id: ObjectId;
+  id: string;
   email: string;
   name: string;
   text: string;

@@ -7,7 +7,7 @@ function CommentList({ addComments }: Props) {
   return (
     <ul className={classes.comments}>
       {addComments?.map((comment: CommentData) => (
-        <li key={comment.id}>
+        <li key={comment._id?.toString()}>
           <p>{comment.text}</p>
           <div>
             By <address>{comment.name}</address>
