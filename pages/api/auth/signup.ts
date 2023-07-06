@@ -11,10 +11,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const db = (await connectToDatabase()).db();
+    const existingUser = await db.collection("users").findOne({ email: email });
+    if (existingUser) {
+      res.status(422).json({ message: "User exists already." });
+      (await connectToDatabase()).close();
+      return;
+    }
     const hashPasswords = await hashPassword(password);
 
-    await db.collection("user").insertOne({ email, password: hashPasswords });
+    await db.collection("users").insertOne({ email, password: hashPasswords });
     res.status(201).json({ message: "Created user!" });
+    (await connectToDatabase()).close();
   }
 }
 export default handler;
