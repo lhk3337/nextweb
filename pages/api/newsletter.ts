@@ -13,9 +13,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     );
 
     const db = client.db();
-    await db.collection("emails").insertOne({ email: userEmail });
-    client.close();
-    res.status(201).json({ message: "Sign up!" });
+    const emailCollection = db.collection("emails");
+    const isEmail = await emailCollection.findOne({ email: userEmail });
+
+    if (isEmail) {
+      res.status(422).json({ message: "Email address already exists." });
+    } else {
+      await emailCollection.insertOne({ email: userEmail });
+      client.close();
+      res.status(201).json({ message: "Sign up!" });
+    }
   }
 }
 export default handler;
