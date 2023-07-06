@@ -1,11 +1,13 @@
 .nav_container {
-  padding: 1rem 10%;
+  padding: 1rem 5%;
   background-color: #202020;
+  display: flex;
+  gap: 20rem;
 }
 
 .container {
   display: flex;
-  width: 100%;
+  width: 60%;
   justify-content: space-between;
   align-items: center;
 }
@@ -15,7 +17,7 @@
   color: white;
   font-family: "Fira", sans-serif;
   height: 100%;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   color: #94fdfd;
@@ -30,6 +32,22 @@
   text-decoration: none;
   color: #74dacc;
   font-size: 1rem;
+}
+
+.container button {
+  cursor: pointer;
+  font: inherit;
+  background-color: #03be9f;
+  border: 1px solid #03be9f;
+  border-radius: 6px;
+  color: #dafff7;
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+.container button:hover {
+  background-color: #02afa1;
+  border-color: #02afa1;
 }
 
 @media (min-width: 768px) {
