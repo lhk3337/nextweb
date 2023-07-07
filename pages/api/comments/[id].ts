@@ -1,4 +1,4 @@
-import { connectToDatabase } from "libs/mongodb";
+import { collectionMongoDB } from "libs/mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = req.query.id;
@@ -16,14 +16,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       name,
       text,
     };
-    const db = (await connectToDatabase()).db();
-    await db.collection("comments").insertOne(newComment);
 
+    await (await collectionMongoDB("comments")).insertOne(newComment);
     res.status(201).json({ message: "Added comments!", newComment });
   }
   if (req.method === "GET") {
-    const db = (await connectToDatabase()).db();
-    const result = await db.collection("comments").find({ id: id }).sort({ _id: -1 }).toArray();
+    const result = await (await collectionMongoDB("comments")).find({ id: id }).sort({ _id: -1 }).toArray();
     res.status(200).json({ comments: result });
   }
 }

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "libs/mongodb";
+import { closeMongoDB, collectionMongoDB } from "libs/mongodb";
 import { hashPassword } from "libs/auth";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -10,18 +10,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return;
     }
 
-    const db = (await connectToDatabase()).db();
-    const existingUser = await db.collection("users").findOne({ email: email });
+    const existingUser = await (await collectionMongoDB("users")).findOne({ email: email });
     if (existingUser) {
       res.status(422).json({ message: "User exists already." });
-      (await connectToDatabase()).close();
+      await closeMongoDB();
       return;
     }
     const hashPasswords = await hashPassword(password);
 
-    await db.collection("users").insertOne({ email, password: hashPasswords });
+    await (await collectionMongoDB("users")).insertOne({ email, password: hashPasswords });
     res.status(201).json({ message: "Created user!" });
-    (await connectToDatabase()).close();
+    await closeMongoDB();
   }
 }
 export default handler;
