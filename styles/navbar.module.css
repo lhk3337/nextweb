@@ -3,11 +3,17 @@
   background-color: #202020;
   display: flex;
   gap: 20rem;
+  justify-content: space-between;
 }
 
 .container {
   display: flex;
-  width: 60%;
+  width: 30%;
+  justify-content: space-between;
+  align-items: center;
+}
+.loginContainer {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }

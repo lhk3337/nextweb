@@ -6,20 +6,22 @@ import Itemlist from "components/event-list/list-items";
 import ErrorAlert from "components/error-alert/error-alert";
 import ResultsTitle from "components/results-title/results-title";
 import Button from "components/element/button";
-import { getFilteredEvents } from "libs/api-util";
+// import { getFilteredEvents } from "libs/api-util";
 import { ItemType } from "types/types";
 import { useEffect, useState } from "react";
-
-interface Props {
-  getfilteredItems: ItemType[];
-  filterDate: {
-    year: string;
-    month: string;
-  };
-}
+import { getSession } from "next-auth/client";
+import classes from "components/profile/user-profile.module.css";
+// interface Props {
+//   getfilteredItems: ItemType[];
+//   filterDate: {
+//     year: string;
+//     month: string;
+//   };
+// }
 
 const FilterEvent = () => {
   const [filteredItems, setFilteredItems] = useState([]);
+  const [isLoadings, setIsLoading] = useState(true);
   const router = useRouter();
 
   const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -32,12 +34,24 @@ const FilterEvent = () => {
     setFilteredItems(data);
   }, [data]);
 
+  useEffect(() => {
+    getSession().then((session) => {
+      if (!session) {
+        router.replace("/auth");
+      } else {
+        setIsLoading(false);
+      }
+    });
+  }, [router]);
   const filteredEvents = filteredItems.filter((event: ItemType) => {
     const eventDate = new Date(event.date);
     return eventDate.getFullYear() === parseInt(year) && eventDate.getMonth() === parseInt(month) - 1;
   });
 
   if (isLoading) return;
+  if (isLoadings) {
+    return <p className={classes.profile}>Loading...</p>;
+  }
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>

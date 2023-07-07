@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { GetStaticPropsContext } from "next";
+
+import { useRouter } from "next/router";
+import { getSession } from "next-auth/client";
+import classes from "components/profile/user-profile.module.css";
+
 import { ItemType } from "types/types";
 
 import EventSummary from "components/event-detail/event-summary";
 import EventContent from "components/event-detail/event-content";
 import EventLogistics from "components/event-detail/event-logistics";
 import { getAllEvents, getEventById } from "libs/api-util";
-import { GetStaticPropsContext } from "next";
 import Comments from "components/input/comments";
 interface Props {
   events: ItemType;
 }
 const EventDetail = ({ events }: Props) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (!session) {
+        router.replace("/auth");
+      } else {
+        setIsLoading(false);
+      }
+    });
+  }, [router]);
+
+  if (isLoading) {
+    return <p className={classes.profile}>Loading...</p>;
+  }
+
   if (!events) return;
 
   return (
