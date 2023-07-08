@@ -13,7 +13,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
   const userEmail = session.user?.email;
   const oldPassword = req.body.oldPassword;
-  const newPassowrd = req.body.newPassowrd;
+  const newPassowrd = req.body.newPassword;
 
   const user = await (await collectionMongoDB("users")).findOne({ email: userEmail });
   if (!user) {
