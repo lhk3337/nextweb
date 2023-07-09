@@ -2,13 +2,14 @@
   padding: 1rem 5%;
   background-color: #202020;
   display: flex;
-  gap: 20rem;
+  /* gap: 20rem; */
+  align-items: center;
   justify-content: space-between;
 }
 
 .container {
   display: flex;
-  width: 30%;
+  width: 70%;
   justify-content: space-between;
   align-items: center;
 }
@@ -57,11 +58,20 @@
 }
 
 @media (min-width: 768px) {
+  .container {
+    width: 60%;
+  }
   .logo {
     font-size: 2.5rem;
   }
 
   .navigation a {
     font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .container {
+    width: 30%;
   }
 }
