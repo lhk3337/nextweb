@@ -1,7 +1,10 @@
 import { useRef } from "react";
 import classes from "./profile-form.module.css";
-
-function ProfileForm({ onChangePassword }: any) {
+interface Props {
+  onChangePassword: any;
+  data?: { message: string };
+}
+function ProfileForm({ onChangePassword, data }: Props) {
   const oldPasswordRef = useRef<HTMLInputElement>(null);
   const newPasswordRef = useRef<HTMLInputElement>(null);
   function submitHandler(event: React.FormEvent<HTMLFormElement>) {
@@ -9,6 +12,7 @@ function ProfileForm({ onChangePassword }: any) {
 
     const enterOldPassword = oldPasswordRef.current!.value;
     const enterNewPassword = newPasswordRef.current!.value;
+
     onChangePassword({
       oldPassword: enterOldPassword,
       newPassword: enterNewPassword,
@@ -26,6 +30,9 @@ function ProfileForm({ onChangePassword }: any) {
       </div>
       <div className={classes.action}>
         <button>Change Password</button>
+      </div>
+      <div className={classes.alertmessage}>
+        <span>{data?.message}</span>
       </div>
     </form>
   );

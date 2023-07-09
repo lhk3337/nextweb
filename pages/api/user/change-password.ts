@@ -31,7 +31,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const hashedPassword = await hashPassword(newPassowrd);
   await (await collectionMongoDB("users")).updateOne({ email: userEmail }, { $set: { password: hashedPassword } });
   await closeMongoDB();
-  res.status(200).json({ message: "Password updated!" });
+  res.status(200).json({ ok: true });
 }
 
 export default handler;

@@ -3,9 +3,13 @@ import ProfileForm from "./profile-form";
 import classes from "./user-profile.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+interface Props {
+  oldPassword: string;
+  newPassword: string;
+}
 function UserProfile() {
   const [isLoading, setIsLoading] = useState(true);
+  const [message, setMessage] = useState();
   const router = useRouter();
 
   useEffect(() => {
@@ -22,7 +26,7 @@ function UserProfile() {
     return <p className={classes.profile}>Loading...</p>;
   }
 
-  async function chnagePasswordHandler(passwordData: any) {
+  async function chnagePasswordHandler(passwordData: Props) {
     const response = await fetch("/api/user/change-password", {
       method: "PATCH",
       body: JSON.stringify(passwordData),
@@ -31,13 +35,16 @@ function UserProfile() {
       },
     });
     const data = await response.json();
-    console.log(data);
+    setMessage(data);
+    if (!data.message) {
+      router.replace("/");
+    }
   }
 
   return (
     <section className={classes.profile}>
       <h1>Your User Profile</h1>
-      <ProfileForm onChangePassword={chnagePasswordHandler} />
+      <ProfileForm onChangePassword={chnagePasswordHandler} data={message} />
     </section>
   );
 }

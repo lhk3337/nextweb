@@ -43,3 +43,10 @@
   background-color: #540d83;
   border-color: #540d83;
 }
+
+.alertmessage {
+  color: red;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
